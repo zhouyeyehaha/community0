@@ -1,0 +1,6 @@
+
+spring:
+  thymeleaf:
+#    开发时候建议关闭缓存
+    cache: false
+
