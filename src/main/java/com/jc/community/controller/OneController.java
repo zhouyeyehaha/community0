@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,5 +96,14 @@ public class OneController {
         map.put("age","23");
         list.add(map);
         return list;
+    }
+
+    @RequestMapping(path = "/cookie",method = RequestMethod.GET)
+//    @ResponseBody
+    public void cooks(HttpServletResponse response){
+        Cookie cookie = new Cookie("name","147");
+        cookie.setPath("/");
+        response.addCookie(cookie);
+//        return "list";
     }
 }

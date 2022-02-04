@@ -3,4 +3,14 @@ spring:
   thymeleaf:
 #    开发时候建议关闭缓存
     cache: false
-
+#  mail:
+#    host: smtp.sina.com
+#    port: 465
+#    username: 7jczhou@sina.com
+#    password: zhouchao123+.
+#    protocol: smtps
+#    properties:
+#      mail:
+server:
+  servlet:
+    context-path:
