@@ -40,6 +40,7 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
                 System.out.println(user);
             }
         }
+        //System.out.println("这是pre");
         return true;
     }
 
@@ -49,10 +50,12 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
         if (user != null && modelAndView  != null){
             modelAndView.addObject("loginUser",user);
         }
+        //System.out.println("这是post");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-            hostHolder.clear();
+        hostHolder.clear();
+        //System.out.println("这是after");
     }
 }
