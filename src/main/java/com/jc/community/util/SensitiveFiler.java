@@ -27,6 +27,7 @@ public class SensitiveFiler {
     private TrieNode rootNode = new TrieNode();
 
     @PostConstruct //表明这是个初始化方法  调用这个容器时候自动就调用了（服务启动就会加载bean）
+    // 读入配置文件里的敏感词 并添加到前缀树里
     public void init() {
         try (
                 InputStream is = this.getClass().getClassLoader().getResourceAsStream("sensitive-words.txt");
@@ -158,5 +159,4 @@ public class SensitiveFiler {
             return subNodes.get(c);
         }
     }
-
 }
