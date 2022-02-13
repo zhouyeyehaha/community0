@@ -4,12 +4,14 @@ import com.jc.community.entity.Comment;
 import com.jc.community.entity.DiscussPost;
 import com.jc.community.entity.Page;
 import com.jc.community.entity.User;
+import com.jc.community.event.EventProducer;
 import com.jc.community.service.CommentService;
 import com.jc.community.service.DiscussPostService;
 import com.jc.community.service.LikeService;
 import com.jc.community.service.UserService;
 import com.jc.community.util.CommunityConstant;
 import com.jc.community.util.CommunityUtil;
+import com.jc.community.util.Event;
 import com.jc.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,9 @@ public class DiscussPostController implements CommunityConstant {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @ResponseBody
     public String addDiscussPost(String title, String content){
@@ -52,6 +57,14 @@ public class DiscussPostController implements CommunityConstant {
         post.setCreateTime(new Date());
         // 把发布的内容加到数据库
         discussPostService.addDiscussPost(post);
+
+        // 触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
 
         // 报错有统一处理,这里不用管
         // 返回json
