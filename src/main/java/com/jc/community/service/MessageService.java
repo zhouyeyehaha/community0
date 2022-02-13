@@ -47,4 +47,21 @@ public class MessageService {
     public int readMessage(List<Integer> ids){
         return messageMapper.updataStatus(ids, 1);
     }
+
+    public Message findLatestNotice(int userId, String topic) {
+        return messageMapper.selectLatestNotice(userId, topic);
+    }
+
+    public int findNoticeCount(int userId, String topic) {
+        return messageMapper.selectNoticeCount(userId, topic);
+    }
+
+    public int findNoticeUnreadCount(int userId, String topic) {
+        return messageMapper.selectNoticeUnreadCount(userId, topic);
+    }
+
+    public List<Message> findNotices(int userId, String topice, int offset, int limit) {
+        return messageMapper.selectNotices(userId, topice, offset, limit);
+    }
+
 }

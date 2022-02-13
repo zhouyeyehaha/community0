@@ -4,6 +4,7 @@ import com.jc.community.dao.OneDao;
 import com.jc.community.dao.OneDaoImpl;
 import com.jc.community.service.OneService;
 import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
