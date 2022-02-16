@@ -29,8 +29,8 @@ public class EventConsumer implements CommunityConstant {
     @Autowired
     private DiscussPostService discussPostService;
 
-    @Autowired
-    private com.nowcoder.community.service.ElasticsearchService elasticsearchService;
+//    @Autowired
+//    private com.nowcoder.community.service.ElasticsearchService elasticsearchService;
 
     @KafkaListener(topics = {TOPIC_COMMENT, TOPIC_FOLLOW, TOPIC_LIKE})
     public void handleMommentMessage(ConsumerRecord record) {
