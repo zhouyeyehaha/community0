@@ -47,4 +47,13 @@ public class DiscussPostService {
     public int updataCommentCount(int id,int commentCount){
         return discussPostMapper.updateCommentCount(id,commentCount);
     }
+
+    public int updataTppe(int id,int type){
+        return discussPostMapper.updataType(id,type);
+    }
+
+    public int updataStatus(int id,int status){
+        return discussPostMapper.updataStatus(id,status);
+    }
+
 }

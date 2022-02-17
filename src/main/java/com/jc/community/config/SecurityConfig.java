@@ -48,6 +48,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         AUTHORITY_ADMIN,
                         AUTHORITY_MODERATOR
                 )
+                .antMatchers(
+                        "/discuss/top",
+                        "/discuss/wonderful"
+                )
+                .hasAnyAuthority(
+                        AUTHORITY_MODERATOR
+                )
+                .antMatchers(
+                        "/discuss/delete",
+                        "/data/**"
+                )
+                .hasAnyAuthority(
+                        AUTHORITY_ADMIN
+                )
                 // 其他路径登不登陆都可以访问
                 .anyRequest().permitAll()
                 // 禁用csrf功能
@@ -64,12 +78,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         if ("XMLHttpRequest".equals(xRequestedWith)) {
                             response.setContentType("application/plain;charset=utf-8");
                             PrintWriter writer = response.getWriter();
+                            //System.out.println("还没有登录");
                             writer.write(CommunityUtil.getJSONString(403, "你还没有登录"));
                         }
                         // 非异步 直接重定向
                         else {
 //                            System.out.println(xRequestedWith);
 //                            System.out.println("权限不够");
+                            System.out.println("还没有登录");
                             response.sendRedirect(request.getContextPath() + "/login");
                         }
                     }
@@ -86,6 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         }
                         // 非异步 直接重定向
                         else {
+                            System.out.println("没有权限");
                             response.sendRedirect(request.getContextPath() + "/denied");
                         }
                     }

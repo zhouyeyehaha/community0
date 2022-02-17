@@ -74,8 +74,8 @@ public class RedisTest {
 
         System.out.println(redisTemplate.opsForZSet().zCard(redisKey));
         System.out.println(redisTemplate.opsForZSet().score(redisKey, "一号"));
-        System.out.println(redisTemplate.opsForZSet().reverseRank(redisKey,"二号"));
-        System.out.println(redisTemplate.opsForZSet().range(redisKey,0,1));
+        System.out.println(redisTemplate.opsForZSet().reverseRank(redisKey, "二号"));
+        System.out.println(redisTemplate.opsForZSet().range(redisKey, 0, 1));
     }
 
     @Test
@@ -85,5 +85,24 @@ public class RedisTest {
         System.out.println(redisTemplate.hasKey("test:user"));
 
         redisTemplate.expire("test:students", 10, TimeUnit.SECONDS);
+    }
+
+    @Test
+    public void test06() {
+        String redisKey = "test:hll:01";
+
+        for (int i = 0; i < 100000; i++) {
+            redisTemplate.opsForHyperLogLog().add(redisKey, i);
+        }
+
+        for (int i = 0; i < 100000; i++) {
+            int r = (int) (Math.random() * 100000 + 1);
+            redisTemplate.opsForHyperLogLog().add(redisKey, r);
+        }
+
+        long size = redisTemplate.opsForHyperLogLog().size(redisKey);
+        System.out.println(size);
+
+
     }
 }

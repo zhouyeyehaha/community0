@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-@Component
+//@Component
 public class LoginRequiredInterceptor implements HandlerInterceptor {
 
     @Autowired
