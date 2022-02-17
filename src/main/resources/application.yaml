@@ -3,6 +3,9 @@ spring:
   thymeleaf:
 #    开发时候建议关闭缓存
     cache: false
+#  quartz:
+#    dsname
+#    job-store-type: jdbc
 #  mail:
 #    host: smtp.sina.com
 #    port: 465
