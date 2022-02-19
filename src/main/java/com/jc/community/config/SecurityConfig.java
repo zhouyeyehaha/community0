@@ -2,6 +2,8 @@ package com.jc.community.config;
 
 import com.jc.community.util.CommunityConstant;
 import com.jc.community.util.CommunityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +21,8 @@ import java.io.PrintWriter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements CommunityConstant {
+
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     // 放开静态资源
     @Override
@@ -57,7 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                 )
                 .antMatchers(
                         "/discuss/delete",
-                        "/data/**"
+                        "/data/**",
+                        "/actuator/**"
                 )
                 .hasAnyAuthority(
                         AUTHORITY_ADMIN
@@ -79,13 +84,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                             response.setContentType("application/plain;charset=utf-8");
                             PrintWriter writer = response.getWriter();
                             //System.out.println("还没有登录");
+                            logger.info("还没登录（异步请求）");
                             writer.write(CommunityUtil.getJSONString(403, "你还没有登录"));
                         }
                         // 非异步 直接重定向
                         else {
-//                            System.out.println(xRequestedWith);
-//                            System.out.println("权限不够");
-                            System.out.println("还没有登录");
+                            logger.info("还没登录");
                             response.sendRedirect(request.getContextPath() + "/login");
                         }
                     }
@@ -98,11 +102,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         if ("XMLHttpRequest".equals(xRequestedWith)) {
                             response.setContentType("application/plain;charset=utf-8");
                             PrintWriter writer = response.getWriter();
+                            logger.info("没有权限（异步请求）");
                             writer.write(CommunityUtil.getJSONString(403, "你没有访问此功能的权限"));
                         }
                         // 非异步 直接重定向
                         else {
-                            System.out.println("没有权限");
+                            logger.info("没有权限");
                             response.sendRedirect(request.getContextPath() + "/denied");
                         }
                     }

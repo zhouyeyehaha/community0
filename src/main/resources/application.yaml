@@ -17,3 +17,14 @@ spring:
 server:
   servlet:
     context-path:
+
+management:
+  health:
+    elasticsearch:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        exclude: info,caches
+
